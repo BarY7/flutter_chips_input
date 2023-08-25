@@ -448,7 +448,7 @@ class ChipsInputState<T> extends State<ChipsInput<T>>
     );
 
     return RawKeyboardListener(
-      focusNode: _focusNode, // or FocusNode()
+      focusNode: _effectiveFocusNode, // or FocusNode()
       onKey: (event) {
         final str = currentTextEditingValue.text;
         if (event.runtimeType.toString() == 'RawKeyDownEvent' &&
@@ -476,7 +476,7 @@ class ChipsInputState<T> extends State<ChipsInput<T>>
                 },
                 child: InputDecorator(
                   decoration: widget.decoration,
-                  isFocused: _focusNode.hasFocus,
+                  isFocused: _effectiveFocusNode.hasFocus,
                   isEmpty: _value.text.isEmpty && _chips.isEmpty,
                   child: Wrap(
                     crossAxisAlignment: WrapCrossAlignment.center,
