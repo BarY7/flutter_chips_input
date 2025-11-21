@@ -288,7 +288,10 @@ class ChipsInputState<T> extends State<ChipsInput<T>>
     Future.delayed(const Duration(milliseconds: 300), () {
       WidgetsBinding.instance.addPostFrameCallback((_) async {
         final renderBox = context.findRenderObject() as RenderBox;
-        await Scrollable.of(context)?.position.ensureVisible(renderBox);
+        final scrollable = Scrollable.maybeOf(context);
+        if (scrollable != null) {
+          await scrollable.position.ensureVisible(renderBox);
+        }
       });
     });
   }
@@ -435,7 +438,7 @@ class ChipsInputState<T> extends State<ChipsInput<T>>
                 maxLines: 1,
                 overflow: widget.textOverflow,
                 style: widget.textStyle ??
-                    theme.textTheme.subtitle1!.copyWith(height: 1.5),
+                    theme.textTheme.titleMedium!.copyWith(height: 1.5),
               ),
             ),
             Flexible(
@@ -505,4 +508,14 @@ class ChipsInputState<T> extends State<ChipsInput<T>>
 
   @override
   void showToolbar() {}
+
+  @override
+  void didChangeInputControl(
+      TextInputControl? oldControl, TextInputControl? newControl) {}
+
+  @override
+  void insertContent(KeyboardInsertedContent content) {}
+
+  @override
+  void performSelector(String selectorName) {}
 }
